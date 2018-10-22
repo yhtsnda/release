@@ -29,5 +29,5 @@ FROM alpine:3.6
 COPY pkg.tgz /
 EOF
 	docker build -t rainbond/cni:rbd_v${RELEASE_VERSION} .
-	docker push rainbond/cni:rbd_v${RELEASE_VERSION}
+	#docker push rainbond/cni:rbd_v${RELEASE_VERSION}
 popd
