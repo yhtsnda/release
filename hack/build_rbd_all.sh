@@ -17,11 +17,12 @@ release_desc=${RELEASE_VERSION}-${git_commit}-${buildTime}
 
 git clone --depth 1 -b ${VERSION} ${RBD_REPO} ${WORKSPACE}/rainbond/
 image_build_items=(api chaos entrance monitor mq webcli worker eventlog)
-RBD_PLUGINS="{all:-1}"
+RBD_PLUGINS="${1:-all}"
 
 build::image() {
 	echo "---> Build Image:$1 FOR RBD"
 	DOCKER_PATH=./hack/contrib/docker/$1
+	pushd /tmp/rainbond/rainbond
 	HOME=`pwd`
 	if [ "$1" = "eventlog" ];then
 		docker build -t goodraim.me/event-build:v1 ${DOCKER_PATH}/build
@@ -39,6 +40,7 @@ build::image() {
 	rm -f ./Dockerfile.release
 	rm -f ./${BASE_NAME}-$1
 	cd $HOME
+	popd
 }
 
 
